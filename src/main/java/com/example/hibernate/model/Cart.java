@@ -3,6 +3,7 @@ package com.example.hibernate.model;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,10 +21,14 @@ public class Cart implements Serializable {
     @Column(name = "cart_id")
     private long id;
 
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     private Set<Item> items;
 
     public Cart() {}
+
+    public Cart(Set<Item> items) {
+        this.items = items;
+    }
 
     public long getId() {
         return id;
@@ -45,8 +50,13 @@ public class Cart implements Serializable {
     public String toString() {
         return "{" +
             " id='" + getId() + "'" +
-            ", items='" + getItems() + "'" +
             "}";
+    }
+
+    public void addItem(Item item) {
+        if (items != null) {
+            items.add(item);
+        }
     }
 
 }

@@ -20,6 +20,9 @@ public class Item implements Serializable {
     @Column(name = "id")
     private long id;
 
+    @Column(name = "name")
+    private String name;
+
     @ManyToOne
     @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
@@ -48,12 +51,22 @@ public class Item implements Serializable {
         this.id = id;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
     @Override
     public String toString() {
         return "{" +
             " id='" + getId() + "'" +
-            ", cart='" + getCart() + "'" +
+            ", name='" + getName() + "'" +
             "}";
     }
+   
 
 }

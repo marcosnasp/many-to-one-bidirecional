@@ -1,6 +1,6 @@
 package com.example.hibernate;
 
-import java.util.Set;
+import java.util.HashSet;
 import java.util.logging.Logger;
 
 import org.hibernate.Session;
@@ -19,13 +19,18 @@ public class App
  
         session.beginTransaction();
 
-        Cart cart = new Cart();
-        Set<Item> cartItems = cart.getItems();
+        Cart cart = new Cart(new HashSet<Item>());
 
         Item item1 = new Item();
+        item1.setName("Item 1");
         item1.setCart(cart);
- 
-        cart.setItems(cartItems);
+
+        Item item2 = new Item();
+        item2.setName("Item 2");
+        item2.setCart(cart);
+
+        cart.addItem(item1);
+        cart.addItem(item2);
 
         session.save(cart);
         session.getTransaction().commit();
@@ -36,5 +41,6 @@ public class App
         logger.info(cart.toString());
 
         System.out.println("Cart " + cart.getId() + " was successfully stored in database ");
+        session.close();
     }
 }
